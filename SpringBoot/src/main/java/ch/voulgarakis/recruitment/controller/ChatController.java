@@ -35,9 +35,8 @@ public class ChatController {
     @MessageMapping("/hello")
     @SendToUser("/queue/greetings")
     public ChatMessage personalUserMessage(SimpMessageHeaderAccessor headerAccessor, ChatMessage message) {
-        String username = "mrAnderson";
         // template.convertAndSendToUser(username, "/topic/greetings",
         // new ChatMessage("Greetings to you, sir... " + username + " from template."));
-        return new ChatMessage("Greetings to you, sir... " + username);
+        return new ChatMessage("Greetings to you, mr... Anderson...");
     }
 }

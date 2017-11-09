@@ -12,15 +12,15 @@ public class Message {
         this.payload = payload;
     }
 
-    public String getFrom() {
+    public String from() {
         return from;
     }
 
-    public Class<?> getClazz() {
+    public Class<?> clazz() {
         return clazz;
     }
 
-    public Object getPayload() {
+    public Object payload() {
         return payload;
     }
 }

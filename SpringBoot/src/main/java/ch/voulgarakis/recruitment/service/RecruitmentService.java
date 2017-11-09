@@ -1,8 +1,11 @@
 package ch.voulgarakis.recruitment.service;
 
+import org.springframework.stereotype.Service;
+
 import ch.voulgarakis.recruitment.model.Applicant;
 import ch.voulgarakis.recruitment.model.Vacancy;
 
+@Service
 public interface RecruitmentService {
     public Applicant saveApplicant(Applicant applicant);
 

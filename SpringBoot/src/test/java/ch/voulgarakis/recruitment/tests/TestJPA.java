@@ -13,10 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ch.voulgarakis.recruitment.ApplicationConfig;
 import ch.voulgarakis.recruitment.dao.ApplicantRepository;
 import ch.voulgarakis.recruitment.dao.SkillRepository;
 import ch.voulgarakis.recruitment.dao.VacancyRepository;
@@ -24,11 +23,12 @@ import ch.voulgarakis.recruitment.model.Applicant;
 import ch.voulgarakis.recruitment.model.Skill;
 import ch.voulgarakis.recruitment.model.Vacancy;
 import ch.voulgarakis.recruitment.service.RecruitmentService;
+import ch.voulgarakis.recruitment.tests.config.TestConfig;
 import ch.voulgarakis.recruitment.utils.SkillAndWeight;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
-@Import(ApplicationConfig.class) // Setup with TestConfig
+@ContextConfiguration(classes = TestConfig.class) // Setup test with TestConfig
 @Transactional // Rollback the DB when test is finished!
 public class TestJPA {
     Logger logger = LoggerFactory.getLogger(TestJPA.class);

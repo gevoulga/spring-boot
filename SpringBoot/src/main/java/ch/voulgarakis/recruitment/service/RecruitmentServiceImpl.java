@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import ch.voulgarakis.recruitment.controller.MatchController;
 import ch.voulgarakis.recruitment.dao.ApplicantRepository;
@@ -17,7 +16,6 @@ import ch.voulgarakis.recruitment.model.Applicant;
 import ch.voulgarakis.recruitment.model.Skill;
 import ch.voulgarakis.recruitment.model.Vacancy;
 
-@Service
 @Transactional
 public class RecruitmentServiceImpl implements RecruitmentService {
     @Autowired
@@ -98,10 +96,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         vacancy.getApplicants().add(applicant);
         applicant.getVacancies().add(vacancy);
 
-        List<Skill> sV = vacancy.getRequiredSkills();
+        List<String> sV = vacancy.getRequiredSkills().parallelStream().map(s -> s.getName())
+                .collect(Collectors.toList());
         List<Double> wV = vacancy.getRequiredSkillWeights();
 
-        List<Skill> sA = applicant.getSkillSet();
+        List<String> sA = applicant.getSkillSet().parallelStream().map(s -> s.getName()).collect(Collectors.toList());
         List<Double> wA = applicant.getSkillStrength();
 
         // Whether the applicant's got what's needed!

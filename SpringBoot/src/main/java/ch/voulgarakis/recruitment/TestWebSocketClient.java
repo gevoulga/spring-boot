@@ -17,8 +17,7 @@ public class TestWebSocketClient {
 
             // The rx stream
             wsClient.rxStream().subscribe(m -> {
-                System.out
-                        .println("Thread: " + i + "\nReceived Message:\n" + m.getPayload() + "\n--------------------");
+                System.out.println("Thread: " + i + "\nReceived Message:\n" + m.payload() + "\n--------------------");
             });
 
             // Subscribe

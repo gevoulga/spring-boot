@@ -5,6 +5,10 @@ public class ApplicationResult {
     private String vacancy;
     private boolean match;
 
+    protected ApplicationResult() {
+        // Default constructor
+    }
+
     public ApplicationResult(String applicant, String vacancy, boolean match) {
         super();
         this.applicant = applicant;
@@ -22,5 +26,10 @@ public class ApplicationResult {
 
     public boolean isMatch() {
         return match;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + applicant + "] applied for [" + vacancy + "] and was [" + match + "]";
     }
 }
