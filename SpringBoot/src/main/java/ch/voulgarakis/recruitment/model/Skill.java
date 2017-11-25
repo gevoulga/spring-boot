@@ -1,14 +1,13 @@
 package ch.voulgarakis.recruitment.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Skill {
     @Id
-    @GeneratedValue
-    private Long id;
+    // @GeneratedValue
+    private String id;
 
     // @Id
     // @GeneratedValue(generator = "uuid")
@@ -19,9 +18,11 @@ public class Skill {
 
     protected Skill() {
         // Empty contructor
+        // id = name;
     }
 
     public Skill(String name) {
+        id = name;
         this.name = name;
     }
 

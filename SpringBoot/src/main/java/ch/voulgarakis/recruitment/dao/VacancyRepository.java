@@ -11,6 +11,8 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
     // Return skill by name
     public Vacancy findByName(String name);
 
+    public boolean existsByName(String name);
+
     // https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-creating-database-queries-with-the-query-annotation/
     // custom query example and return a stream
     // @Query("select c from Skills c where c.name like 'skillNameBeginning%'")

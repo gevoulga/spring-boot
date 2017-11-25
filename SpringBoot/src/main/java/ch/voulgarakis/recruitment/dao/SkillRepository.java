@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import ch.voulgarakis.recruitment.model.Skill;
 
 @Repository
-public interface SkillRepository extends JpaRepository<Skill, Long> {
+public interface SkillRepository extends JpaRepository<Skill, String> {
     // https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-creating-database-queries-from-method-names/
     // Return skill by name
     public Skill findByName(String name);

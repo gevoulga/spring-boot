@@ -29,9 +29,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     public Applicant saveApplicant(Applicant applicant) {
-        List<Skill> skills = saveSkills(applicant.getSkillSet());
-        applicant.getSkillSet().clear();
-        applicant.getSkillSet().addAll(skills);
+        applicant.getSkillSet().stream().forEach(skill -> skillRepo.save(skill));
         return appRepo.save(applicant);
     }
 
@@ -41,10 +39,13 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     }
 
     @Override
+    public boolean existsApplicant(Applicant applicant) {
+        return appRepo.existsByName(applicant.getName());
+    }
+
+    @Override
     public Vacancy saveVacancy(Vacancy vacancy) {
-        List<Skill> skills = saveSkills(vacancy.getRequiredSkills());
-        vacancy.getRequiredSkills().clear();
-        vacancy.getRequiredSkills().addAll(skills);
+        vacancy.getRequiredSkills().stream().forEach(skill -> skillRepo.save(skill));
         return vacRepo.save(vacancy);
     }
 
@@ -53,15 +54,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         return vacRepo.findByName(name);
     }
 
-    // Make sure all the skills mentioned in the list are present in the Skill Repository. If not, add them!
-    private List<Skill> saveSkills(List<Skill> skills) {
-        // If you do a parallel Stream, you end up with a typical race condition!!!...
-        return skills.stream().map(skill -> {
-            if (!skillRepo.existsByName(skill.getName()))
-                return skillRepo.save(skill);
-            else
-                return skillRepo.findByName(skill.getName());
-        }).collect(Collectors.toList());
+    @Override
+    public boolean existsVacancy(Vacancy vacancy) {
+        return vacRepo.existsByName(vacancy.getName());
     }
 
     @Override
