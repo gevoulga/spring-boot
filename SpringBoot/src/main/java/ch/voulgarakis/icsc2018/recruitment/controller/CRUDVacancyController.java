@@ -1,0 +1,127 @@
+package ch.voulgarakis.icsc2018.recruitment.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
+
+import ch.voulgarakis.icsc2018.recruitment.dao.VacancyRepository;
+import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
+import ch.voulgarakis.icsc2018.recruitment.utils.OperationNotSupportedException;
+
+@RestController
+@RequestMapping("/vacancy")
+// Note that this annotation should typically be used only on a @Service. But since this is a simple CRUD
+// Controller, we break the convention and place it on a @Controller
+@Transactional
+public class CRUDVacancyController {
+    @Autowired
+    private VacancyRepository vacRepo;
+
+    // -------------------Retrieve All Vacancys & Vacancies---------------------------------------------
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<List<Vacancy>> listAllVacancies(HttpServletRequest request) {
+        List<Vacancy> Vacancys = vacRepo.findAll();
+        return new ResponseEntity<List<Vacancy>>(Vacancys, HttpStatus.OK);
+    }
+
+    // -------------------Retrieve Single Vacancy & Vacancy------------------------------------------
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Vacancy> getVacancy(@PathVariable("id") long id) {
+        Vacancy Vacancy = vacRepo.findOne(id);
+        if (Vacancy != null)
+            return new ResponseEntity<Vacancy>(Vacancy, HttpStatus.FOUND);
+        else
+            return new ResponseEntity<Vacancy>(HttpStatus.NOT_FOUND);
+    }
+
+    // -------------------Create Single Vacancys & Vacancies---------------------------------------------
+
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    @Transactional
+    public ResponseEntity<Vacancy> createVacancy(HttpServletRequest request, @RequestBody Vacancy Vacancy) {
+        if (Vacancy != null)
+            synchronized (vacRepo) {
+                if (!vacRepo.exists(Example.of(Vacancy))) {
+                    vacRepo.save(Vacancy);
+                    return new ResponseEntity<>(HttpStatus.CREATED);
+                } else
+                    return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+        else
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+    }
+
+    // -------------------Update Vacancys & Vacancies-------------------------------------------
+
+    @RequestMapping(value = "", method = RequestMethod.PUT)
+    public ResponseEntity<Vacancy> createVacancies(HttpServletRequest request, @RequestBody List<Vacancy> Vacancys) {
+        // List<HttpStatus> httpStatuses = Vacancys.stream().map(Vacancy -> {
+        // if (Vacancy != null)
+        // if (!rs.existsVacancy(Vacancy)) {
+        // rs.updateVacancy(Vacancy);
+        // return HttpStatus.OK;
+        // } else
+        // return HttpStatus.NOT_FOUND;
+        // else
+        // return HttpStatus.OK;
+        // }).collect(Collectors.toList());
+        //
+        // return httpStatuses.stream().noneMatch(httpStatus -> httpStatus.equals(HttpStatus.NOT_FOUND))
+        // ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.PARTIAL_CONTENT);
+
+        throw new OperationNotSupportedException("I am sorry but bulk updates are not supported yet.");
+    }
+
+    // ------------------- Update Single Vacancy & Vacancy ------------------------------------------------
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Vacancy> updateVacancy(@PathVariable("id") long id, @RequestBody Vacancy Vacancy) {
+        if (vacRepo.exists(id)) {
+            vacRepo.save(Vacancy);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    // ------------------- Delete Single Vacancy & Vacancy-----------------------------------------
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Vacancy> deleteVacancy(@PathVariable("id") long id) {
+        synchronized (vacRepo) {
+            if (vacRepo.exists(id)) {
+                vacRepo.delete(id);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // ------------------- Delete All Vacancys & Vacancies-----------------------------
+
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    public ResponseEntity<Vacancy> deleteAllVacancies() {
+        vacRepo.deleteAllInBatch();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // ------------------- Delete All Vacancys & Vacancies-----------------------------
+    @ExceptionHandler({ OperationNotSupportedException.class })
+    protected ResponseEntity<String> handleUnknownException(OperationNotSupportedException ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_IMPLEMENTED);
+    }
+}
