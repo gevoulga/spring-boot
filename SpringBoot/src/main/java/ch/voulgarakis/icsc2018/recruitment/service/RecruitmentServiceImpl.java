@@ -15,6 +15,7 @@ import ch.voulgarakis.icsc2018.recruitment.dao.VacancyRepository;
 import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
 import ch.voulgarakis.icsc2018.recruitment.model.Skill;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
+import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
 
 @Transactional
 public class RecruitmentServiceImpl implements RecruitmentService {
@@ -98,7 +99,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
      * success = Sum(s(true|false)*wA(0-1)*wV(0-1)) > fitThres
      */
     @Override
-    public boolean apply(Applicant applicant, Vacancy vacancy) {
+    public ApplicationResult apply(Applicant applicant, Vacancy vacancy) {
         // Store the fact that the applicant applied for the vacancy (Bi-directional)
         vacancy.getApplicants().add(applicant);
         applicant.getVacancies().add(vacancy);
@@ -118,11 +119,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         // Notify about the application attempt and the result!
         matchController.notify(applicant, vacancy, match);
 
-        return match;
+        return new ApplicationResult(applicant.getName(), vacancy.getName(), match);
     }
 
     @Override
-    public boolean apply(long applicantId, long vacancyId) {
+    public ApplicationResult apply(long applicantId, long vacancyId) {
         return apply(appRepo.findOne(applicantId), vacRepo.findOne(vacancyId));
     }
 }

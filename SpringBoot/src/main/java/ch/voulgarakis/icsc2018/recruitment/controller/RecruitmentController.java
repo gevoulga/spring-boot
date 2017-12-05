@@ -20,6 +20,7 @@ import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
 import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentService;
 import ch.voulgarakis.icsc2018.recruitment.utils.ApplicantVacancy;
+import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
 import ch.voulgarakis.icsc2018.recruitment.utils.OperationNotSupportedException;
 
 @RestController
@@ -58,26 +59,24 @@ public class RecruitmentController {
     @RequestMapping(value = "/vacancy", method = RequestMethod.POST)
     public ResponseEntity<Vacancy> saveVacancy(@RequestBody Vacancy vacancy) {
         Vacancy newVacancy = rs.saveVacancy(vacancy);
-        return ResponseEntity
-                .created(fromMethodCall(on(RecruitmentController.class).loadVacancy(newVacancy.getName()))
-                        .buildAndExpand().toUri())
-                .body(newVacancy);
+        return ResponseEntity.created(fromMethodCall(on(RecruitmentController.class).loadVacancy(newVacancy.getName()))
+                .buildAndExpand().toUri()).body(newVacancy);
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.PUT)
-    public ResponseEntity<Boolean> apply(@RequestBody ApplicantVacancy applicantVacancy) {
+    public ResponseEntity<ApplicationResult> apply(@RequestBody ApplicantVacancy applicantVacancy) {
         return new ResponseEntity<>(rs.apply(applicantVacancy.getApplicant(), applicantVacancy.getVacancy()),
                 HttpStatus.OK);
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.PUT, params = { "applicantId", "vacancyId" })
-    public ResponseEntity<Boolean> apply(@PathParam("applicantId") long applicantId,
+    public ResponseEntity<ApplicationResult> apply(@PathParam("applicantId") long applicantId,
             @PathParam("vacancyId") long vacancyId) {
         return new ResponseEntity<>(rs.apply(applicantId, vacancyId), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.PUT, params = { "applicantName", "vacancyName" })
-    public ResponseEntity<Boolean> apply(@PathParam("applicantName") String applicantName,
+    public ResponseEntity<ApplicationResult> apply(@PathParam("applicantName") String applicantName,
             @PathParam("vacancyName") String vacancyName) {
         return new ResponseEntity<>(rs.apply(rs.loadApplicant(applicantName), rs.loadVacancy(vacancyName)),
                 HttpStatus.OK);

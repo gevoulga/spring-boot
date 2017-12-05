@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import ch.voulgarakis.icsc2018.recruitment.events.TodoEventProducer;
 import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentService;
 import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentServiceImpl;
 
@@ -34,8 +33,5 @@ public class ApplicationConfig {
         // Tell server to look for web-server.properties or web-server.yml
         // System.setProperty("spring.config.name", "web-server");
         ConfigurableApplicationContext ctx = SpringApplication.run(ApplicationConfig.class, args);
-
-        ctx.getBean(TodoEventProducer.class).createTodo(true);
-        ctx.getBean(TodoEventProducer.class).createTodo(false);
     }
 }

@@ -110,7 +110,7 @@ public class TestWebSocket {
         wsClient.subscribe("/topic/applications", ApplicationResult.class);
 
         // Apply for a position....
-        boolean result = rs.apply(
+        ApplicationResult result = rs.apply(
                 // Applicant
                 new Applicant("Jim Carrey", new SkillAndWeight(new Skill("Omnipotent"), 1d),
                         new SkillAndWeight(new Skill("Omnipresent"), 1d)),
@@ -118,7 +118,7 @@ public class TestWebSocket {
                 new Vacancy("God", 0.8d, new SkillAndWeight(new Skill("Omnipresent"), 0.9d),
                         new SkillAndWeight(new Skill("Omnipresent"), 0.9d)));
 
-        assertTrue("Jim Carrey is supposed to become god... At least for a week!", result);
+        assertTrue("Jim Carrey is supposed to become god... At least for a week!", result.isMatch());
 
         // Wait a few seconds until the message exchange has been complete, and we can close the websocket session
         try {

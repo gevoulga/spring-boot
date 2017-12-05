@@ -21,6 +21,7 @@ import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
 import ch.voulgarakis.icsc2018.recruitment.model.Skill;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
 import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentService;
+import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
 import ch.voulgarakis.icsc2018.recruitment.utils.SkillAndWeight;
 import ch.voulgarakis.recruitment.tests.config.TestConfig;
 
@@ -128,11 +129,11 @@ public class TestJPA {
         assertNotNull("Santa should already be in the DB.", santa);
 
         // Claus can apply to become santa?
-        boolean success = rs.apply(claus, santa);
+        ApplicationResult success = rs.apply(claus, santa);
 
         logger.info("Applied Claus for Santa...");
         logger.info(rs.info());
-        assertTrue("Claus should have gotten the job of Santa.", success);
+        assertTrue("Claus should have gotten the job of Santa.", success.isMatch());
     }
 
     @After
