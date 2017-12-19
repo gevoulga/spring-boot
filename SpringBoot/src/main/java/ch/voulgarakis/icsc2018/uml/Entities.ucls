@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
-  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+<class-diagram version="1.2.2" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="ch.voulgarakis.icsc2018.recruitment.model.Applicant" project="SpringBoot" 
     file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/model/Applicant.java" binary="false" 
     corner="BOTTOM_RIGHT">    
@@ -14,7 +14,7 @@
   <class id="2" language="java" name="ch.voulgarakis.icsc2018.recruitment.model.Skill" project="SpringBoot" 
     file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/model/Skill.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="846" y="560"/>    
+    <position height="-1" width="-1" x="660" y="472"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -44,7 +44,7 @@
   <class id="5" language="java" name="ch.voulgarakis.icsc2018.recruitment.model.SkillList" project="SpringBoot" 
     file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/model/SkillList.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="824" y="379"/>    
+    <position height="-1" width="-1" x="421" y="473"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -53,58 +53,89 @@
   </class>  
   <association id="6">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="7" name="applications"/>      
-      <multiplicity id="8" minimum="0" maximum="2147483647"/>    
+      <attribute id="7" name="applications">        
+        <position height="18" width="65" x="338" y="276"/>      
+      </attribute>      
+      <multiplicity id="8" minimum="0" maximum="2147483647">        
+        <position height="16" width="21" x="333" y="291"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="9">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="10" name="skillSet"/>      
-      <multiplicity id="11" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="12">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="13" name="vacancy"/>      
-      <multiplicity id="14" minimum="0" maximum="1"/>    
+      <attribute id="10" name="vacancy">        
+        <position height="18" width="50" x="204" y="350"/>      
+      </attribute>      
+      <multiplicity id="11" minimum="0" maximum="1">        
+        <position height="16" width="23" x="217" y="365"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="12">    
+    <bendpoint x="80" y="328"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="13" name="applications">        
+        <position height="18" width="65" x="159" y="281"/>      
+      </attribute>      
+      <multiplicity id="14" minimum="0" maximum="2147483647">        
+        <position height="16" width="21" x="164" y="299"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <association id="15">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="16" name="skills"/>      
-      <multiplicity id="17" minimum="0" maximum="2147483647"/>    
+      <attribute id="16" name="skills">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="17" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="18">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="19" name="applicant"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="19" name="requiredSkills">        
+        <position height="18" width="72" x="421" y="280"/>      
+      </attribute>      
+      <multiplicity id="20" minimum="0" maximum="1">        
+        <position height="16" width="23" x="426" y="297"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="21">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="22" name="requiredSkills"/>      
-      <multiplicity id="23" minimum="0" maximum="1"/>    
+    <bendpoint x="344" y="352"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="22" name="skillSet">        
+        <position height="18" width="41" x="239" y="275"/>      
+      </attribute>      
+      <multiplicity id="23" minimum="0" maximum="1">        
+        <position height="16" width="23" x="252" y="292"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="24">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="25" name="applications"/>      
-      <multiplicity id="26" minimum="0" maximum="2147483647"/>    
+    <bendpoint x="155" y="323"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="25" name="applicant">        
+        <position height="18" width="51" x="105" y="346"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="1">        
+        <position height="16" width="23" x="133" y="364"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

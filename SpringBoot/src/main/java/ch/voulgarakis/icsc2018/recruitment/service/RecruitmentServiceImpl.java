@@ -124,8 +124,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         Application application = new Application(applicant, vacancy, fitRatio);
         applRepo.save(application);
 
-        // Notify about the application attempt and the result!
-        matchController.notify(applicant, vacancy, fitRatio);
+        // Notify about the application if a good fit -> CrossCuttingConcern?
+        // if (fitRatio > 0.75)
+        // matchController.notify(applicant, vacancy, fitRatio);
 
         return fitRatio;
     }

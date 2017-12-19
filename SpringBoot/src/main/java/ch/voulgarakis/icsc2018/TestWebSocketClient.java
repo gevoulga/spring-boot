@@ -1,6 +1,7 @@
 package ch.voulgarakis.icsc2018;
 
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 import ch.voulgarakis.icsc2018.chat.model.ChatMessage;
@@ -16,13 +17,13 @@ public class TestWebSocketClient {
             WebsocketClient wsClient = WebsocketClient.create("ws://localhost:8081/RecruitmentService/recruitment");
 
             // The rx stream
-            wsClient.rxStream().subscribe(m -> {
+            wsClient.rxStream().delay(4, TimeUnit.SECONDS).subscribe(m -> {
                 System.out.println("Thread: " + i + "\nReceived Message:\n" + m.payload() + "\n--------------------");
             });
 
             // Subscribe
-            wsClient.subscribe("/topic/publicChatSession0", ChatMessage.class);
-            wsClient.subscribe("/user/queue/greetings", ChatMessage.class);
+            wsClient.subscribe("/topic/publicChatSession", ChatMessage.class);
+            wsClient.subscribe("/user/queue/privateChatSession", ChatMessage.class);
 
             try {
                 barrier.await();
@@ -31,8 +32,8 @@ public class TestWebSocketClient {
                 e.printStackTrace();
             }
 
-            // wsClient.send("/chat/with/publicChatSession0", new ChatMessage("Giasou"));
-            wsClient.send("/chat/with/hello", new ChatMessage("Bonjour"));
+            wsClient.send("/chat/public/publicChatSession", new ChatMessage("Giasou"));
+            wsClient.send("/chat/private/privateChatSession", new ChatMessage("Bonjour"));
 
             try {
                 Thread.sleep(10000);
