@@ -3,7 +3,6 @@ package ch.voulgarakis.recruitment.tests;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -21,7 +20,6 @@ import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
 import ch.voulgarakis.icsc2018.recruitment.model.Skill;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
 import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentService;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
 import ch.voulgarakis.icsc2018.recruitment.utils.SkillAndWeight;
 import ch.voulgarakis.recruitment.tests.config.TestConfig;
 
@@ -64,6 +62,11 @@ public class TestJPA {
         ///////////
         // 2 Applicants added in CRUD fashion. The corresponding skills are not added in the SkillDB!
         ///////////
+        skillRepo.save(new Skill("Clumsy"));
+        skillRepo.save(new Skill("Obsessed"));
+        skillRepo.save(new Skill("Clever"));
+        skillRepo.save(new Skill("Fast"));
+
         // Tom!
         appRepo.save(new Applicant("Tom", new SkillAndWeight(new Skill("Clumsy"), 0.8d),
                 new SkillAndWeight(new Skill("Obsessed"), 0.2d)));
@@ -73,7 +76,7 @@ public class TestJPA {
 
         logger.info("Added Tom & Jerry...");
         logger.info(rs.info());
-        assertTrue("Skill Repository ended up with more entries... Check for duplicates...", skillRepo.count() == 1);
+        assertTrue("Skill Repository ended up with more entries... Check for duplicates...", skillRepo.count() == 5);
         assertTrue("Applicant Repository ended up with more entries... Check for duplicates...", appRepo.count() == 2);
     }
 
@@ -99,11 +102,11 @@ public class TestJPA {
         // Write a few Vacancies!
         ///////////
         // The Santa vacancy... We want somebody bearing gifts and can fly!
-        rs.saveVacancy(new Vacancy("Santa", 0.8d, new SkillAndWeight(new Skill("Giftbearer"), 0.9d),
+        rs.saveVacancy(new Vacancy("Santa", new SkillAndWeight(new Skill("Giftbearer"), 0.9d),
                 new SkillAndWeight(new Skill("Aviator"), 0.9d)));
 
         // The job of a good guy, is to be a good guy!
-        rs.saveVacancy(new Vacancy("BeAGoodGuy", 0.8d, new SkillAndWeight(new Skill("Good"), 0.9d)));
+        rs.saveVacancy(new Vacancy("BeAGoodGuy", new SkillAndWeight(new Skill("Good"), 0.9d)));
 
         logger.info("Added Johnny, Claus, Santa, Scar, BeAGoodGuy...");
         logger.info(rs.info());
@@ -129,25 +132,10 @@ public class TestJPA {
         assertNotNull("Santa should already be in the DB.", santa);
 
         // Claus can apply to become santa?
-        ApplicationResult success = rs.apply(claus, santa);
+        double fit = rs.apply(claus, santa);
 
         logger.info("Applied Claus for Santa...");
         logger.info(rs.info());
-        assertTrue("Claus should have gotten the job of Santa.", success.isMatch());
-    }
-
-    @After
-    public void cleanupDB() {
-
-        // Now display the Application repository
-        appRepo.deleteAll();
-        vacRepo.deleteAll();
-        skillRepo.deleteAll();
-
-        // Check the test
-        assertTrue("Skill Repository ended up with more entries... Check for duplicates...", skillRepo.count() == 0);
-        assertTrue("Applicant Repository ended up with more entries... Check for duplicates...", appRepo.count() == 0);
-        assertTrue("Vacancy Repository ended up with more entries... Check for duplicates...", vacRepo.count() == 0);
-
+        assertTrue("Claus should have gotten the job of Santa.", fit >= 0.9);
     }
 }

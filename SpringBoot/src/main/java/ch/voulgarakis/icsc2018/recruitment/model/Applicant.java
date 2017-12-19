@@ -10,7 +10,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -35,8 +35,8 @@ public class Applicant {
     @ElementCollection
     private List<Double> skillStrength; // The strength of each skill
 
-    @ManyToMany(mappedBy = "applicants")
-    private List<Vacancy> vacancies = new ArrayList<>(); // The vacancies the applicant has applied to
+    @OneToMany(mappedBy = "applicant")
+    private List<Application> applications = new ArrayList<>(); // // The applications of this applicant
 
     protected Applicant() {
         // Empty constructor
@@ -64,8 +64,8 @@ public class Applicant {
         return skillStrength;
     }
 
-    public List<Vacancy> getVacancies() {
-        return vacancies;
+    public List<Application> getApplications() {
+        return applications;
     }
 
     @Override

@@ -30,7 +30,7 @@ public class CRUDVacancyController {
     @Autowired
     private VacancyRepository vacRepo;
 
-    // -------------------Retrieve All Vacancys & Vacancies---------------------------------------------
+    // -------------------Retrieve All Vacancies---------------------------------------------
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Vacancy>> listAllVacancies(HttpServletRequest request) {
@@ -38,7 +38,7 @@ public class CRUDVacancyController {
         return new ResponseEntity<List<Vacancy>>(Vacancys, HttpStatus.OK);
     }
 
-    // -------------------Retrieve Single Vacancy & Vacancy------------------------------------------
+    // -------------------Retrieve Single Vacancy------------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Vacancy> getVacancy(@PathVariable("id") long id) {
@@ -49,7 +49,7 @@ public class CRUDVacancyController {
             return new ResponseEntity<Vacancy>(HttpStatus.NOT_FOUND);
     }
 
-    // -------------------Create Single Vacancys & Vacancies---------------------------------------------
+    // -------------------Create Single Vacancies---------------------------------------------
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @Transactional
@@ -66,7 +66,7 @@ public class CRUDVacancyController {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
-    // -------------------Update Vacancys & Vacancies-------------------------------------------
+    // -------------------Update Vacancies-------------------------------------------
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public ResponseEntity<Vacancy> createVacancies(HttpServletRequest request, @RequestBody List<Vacancy> Vacancys) {
@@ -87,7 +87,7 @@ public class CRUDVacancyController {
         throw new OperationNotSupportedException("I am sorry but bulk updates are not supported yet.");
     }
 
-    // ------------------- Update Single Vacancy & Vacancy ------------------------------------------------
+    // ------------------- Update Single Vacancy ------------------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Vacancy> updateVacancy(@PathVariable("id") long id, @RequestBody Vacancy Vacancy) {
@@ -98,7 +98,7 @@ public class CRUDVacancyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // ------------------- Delete Single Vacancy & Vacancy-----------------------------------------
+    // ------------------- Delete Single Vacancy-----------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Vacancy> deleteVacancy(@PathVariable("id") long id) {
@@ -111,7 +111,7 @@ public class CRUDVacancyController {
         }
     }
 
-    // ------------------- Delete All Vacancys & Vacancies-----------------------------
+    // ------------------- Delete All Vacancies-----------------------------
 
     @RequestMapping(value = "", method = RequestMethod.DELETE)
     public ResponseEntity<Vacancy> deleteAllVacancies() {
@@ -119,7 +119,7 @@ public class CRUDVacancyController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // ------------------- Delete All Vacancys & Vacancies-----------------------------
+    // ------------------- Delete All Vacancies-----------------------------
     @ExceptionHandler({ OperationNotSupportedException.class })
     protected ResponseEntity<String> handleUnknownException(OperationNotSupportedException ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_IMPLEMENTED);

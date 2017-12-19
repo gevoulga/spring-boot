@@ -26,7 +26,6 @@ import org.springframework.web.client.RestTemplate;
 import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
 import ch.voulgarakis.icsc2018.recruitment.model.Skill;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
 import ch.voulgarakis.icsc2018.recruitment.utils.SkillAndWeight;
 import ch.voulgarakis.recruitment.tests.config.TestConfig;
 
@@ -128,7 +127,7 @@ public class TestREST {
         // The Santa vacancy... We want somebody bearing gifts and can fly!
         ///////////
         ResponseEntity<Vacancy> postResponse4 = rest.postForEntity(url + "/recruitment/vacancy",
-                new HttpEntity<>(new Vacancy("Santa", 0.8d, new SkillAndWeight(new Skill("Giftbearer"), 0.9d),
+                new HttpEntity<>(new Vacancy("Santa", new SkillAndWeight(new Skill("Giftbearer"), 0.9d),
                         new SkillAndWeight(new Skill("Aviator"), 0.9d))),
                 Vacancy.class);
         logger.info("\n\tpostResponse4: {}", postResponse4);
@@ -138,7 +137,7 @@ public class TestREST {
         // The job of a good guy, is to be a good guy!
         ///////////
         ResponseEntity<Vacancy> postResponse5 = rest.postForEntity(url + "/recruitment/vacancy",
-                new HttpEntity<>(new Vacancy("BeAGoodGuy", 0.8d, new SkillAndWeight(new Skill("Good"), 0.9d))),
+                new HttpEntity<>(new Vacancy("BeAGoodGuy", new SkillAndWeight(new Skill("Good"), 0.9d))),
                 Vacancy.class);
         logger.info("\n\tpostResponse5: {}", postResponse5);
         assertTrue("5th POST should have returned Created", postResponse5.getStatusCode().equals(HttpStatus.CREATED));
@@ -179,12 +178,11 @@ public class TestREST {
     @Test
     public void test3ApplyClausForSanta() {
         // Claus can apply to become santa?
-        ResponseEntity<ApplicationResult> getResponse = rest.exchange(
-                url + "/recruitment/apply?applicantName=Claus&vacancyName=Santa", HttpMethod.PUT, null,
-                ApplicationResult.class);
-        ApplicationResult success = getResponse.getBody();
+        ResponseEntity<Double> getResponse = rest.exchange(
+                url + "/recruitment/apply?applicantName=Claus&vacancyName=Santa", HttpMethod.PUT, null, Double.class);
+        Double fit = getResponse.getBody();
         logger.info("\n\tgetResponse: {}", getResponse);
-        assertTrue("Claus should have gotten the job of Santa.", success.isMatch());
+        assertTrue("Claus should have gotten the job of Santa.", fit >= 0.9);
 
         ///////////
         // GET from all the CRUD DBs the number of their entries

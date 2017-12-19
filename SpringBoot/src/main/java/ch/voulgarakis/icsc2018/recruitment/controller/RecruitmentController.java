@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
+import ch.voulgarakis.icsc2018.recruitment.model.Application;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
 import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentService;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicantVacancy;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
 import ch.voulgarakis.icsc2018.recruitment.utils.OperationNotSupportedException;
 
 @RestController
@@ -64,19 +63,19 @@ public class RecruitmentController {
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.PUT)
-    public ResponseEntity<ApplicationResult> apply(@RequestBody ApplicantVacancy applicantVacancy) {
+    public ResponseEntity<Double> apply(@RequestBody Application applicantVacancy) {
         return new ResponseEntity<>(rs.apply(applicantVacancy.getApplicant(), applicantVacancy.getVacancy()),
                 HttpStatus.OK);
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.PUT, params = { "applicantId", "vacancyId" })
-    public ResponseEntity<ApplicationResult> apply(@PathParam("applicantId") long applicantId,
+    public ResponseEntity<Double> apply(@PathParam("applicantId") long applicantId,
             @PathParam("vacancyId") long vacancyId) {
         return new ResponseEntity<>(rs.apply(applicantId, vacancyId), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.PUT, params = { "applicantName", "vacancyName" })
-    public ResponseEntity<ApplicationResult> apply(@PathParam("applicantName") String applicantName,
+    public ResponseEntity<Double> apply(@PathParam("applicantName") String applicantName,
             @PathParam("vacancyName") String vacancyName) {
         return new ResponseEntity<>(rs.apply(rs.loadApplicant(applicantName), rs.loadVacancy(vacancyName)),
                 HttpStatus.OK);

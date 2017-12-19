@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
 
 @Service
 public interface RecruitmentService {
@@ -20,9 +19,9 @@ public interface RecruitmentService {
 
     public Vacancy saveVacancy(Vacancy vacancy);
 
-    public ApplicationResult apply(Applicant applicant, Vacancy vacancy);
+    public double apply(Applicant applicant, Vacancy vacancy);
 
-    public ApplicationResult apply(long applicantId, long vacancyId);
+    public double apply(long applicantId, long vacancyId);
 
     public String info();
 }

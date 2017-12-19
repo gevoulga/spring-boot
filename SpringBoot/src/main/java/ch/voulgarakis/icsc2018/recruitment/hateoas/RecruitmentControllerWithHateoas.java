@@ -15,10 +15,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
+import ch.voulgarakis.icsc2018.recruitment.model.Application;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
 import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentService;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicantVacancy;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
 import ch.voulgarakis.icsc2018.recruitment.utils.OperationNotSupportedException;
 
 @RestController
@@ -75,18 +74,18 @@ public class RecruitmentControllerWithHateoas {
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.PUT)
-    public ResponseEntity<ApplicationResult> apply(@RequestBody ApplicantVacancy applicantVacancy) {
+    public ResponseEntity<Double> apply(@RequestBody Application applicantVacancy) {
         return ResponseEntity.ok(rs.apply(applicantVacancy.getApplicant(), applicantVacancy.getVacancy()));
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.PUT, params = { "applicantId", "vacancyId" })
-    public ResponseEntity<ApplicationResult> apply(@PathParam("applicantId") long applicantId,
+    public ResponseEntity<Double> apply(@PathParam("applicantId") long applicantId,
             @PathParam("vacancyId") long vacancyId) {
         return ResponseEntity.ok(rs.apply(applicantId, vacancyId));
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.PUT, params = { "applicantName", "vacancyName" })
-    public ResponseEntity<ApplicationResult> apply(@PathParam("applicantName") String applicantName,
+    public ResponseEntity<Double> apply(@PathParam("applicantName") String applicantName,
             @PathParam("vacancyName") String vacancyName) {
         return ResponseEntity.ok(rs.apply(rs.loadApplicant(applicantName), rs.loadVacancy(vacancyName)));
     }

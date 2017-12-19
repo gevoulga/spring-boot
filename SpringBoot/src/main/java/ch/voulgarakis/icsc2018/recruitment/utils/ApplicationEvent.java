@@ -1,19 +1,19 @@
 package ch.voulgarakis.icsc2018.recruitment.utils;
 
-public class ApplicationResult {
+public class ApplicationEvent {
     private String applicant;
     private String vacancy;
-    private boolean match;
+    private double fitRatio;
 
-    protected ApplicationResult() {
+    protected ApplicationEvent() {
         // Default constructor
     }
 
-    public ApplicationResult(String applicant, String vacancy, boolean match) {
+    public ApplicationEvent(String applicant, String vacancy, double fitRatio) {
         super();
         this.applicant = applicant;
         this.vacancy = vacancy;
-        this.match = match;
+        this.fitRatio = fitRatio;
     }
 
     public String getApplicant() {
@@ -24,12 +24,12 @@ public class ApplicationResult {
         return vacancy;
     }
 
-    public boolean isMatch() {
-        return match;
+    public double getFitRatio() {
+        return fitRatio;
     }
 
     @Override
     public String toString() {
-        return "[" + applicant + "] applied for [" + vacancy + "] and was [" + match + "]";
+        return "[" + applicant + "] applied for [" + vacancy + "] and is [" + fitRatio + "] qualified";
     }
 }

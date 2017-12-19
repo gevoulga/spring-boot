@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.voulgarakis.icsc2018.recruitment.events.WebsocketSessionTracker;
 import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
+import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationEvent;
 
 @RestController
 public class MatchController {
@@ -19,13 +19,12 @@ public class MatchController {
     /**
      * Send the result of an application to the websocket topic holding an history of applications.
      */
-    public void notify(Applicant applicant, Vacancy vacancy, boolean match) {
+    public void notify(Applicant applicant, Vacancy vacancy, double fitRatio) {
         // Send to the public topic...
         template.convertAndSend("/topic/applications",
-                new ApplicationResult(applicant.getName(), vacancy.getName(), match));
+                new ApplicationEvent(applicant.getName(), vacancy.getName(), fitRatio));
         // And now send to all the registered users... (in their own specific queue!)
         websocketSessionTracker.sessions().parallelStream().forEach(session -> template.convertAndSendToUser(session,
-                "/queue/applications", new ApplicationResult(applicant.getName(), vacancy.getName(), match)));
-        // return new ApplicationResult(applicant.getName(), vacancy.getName(), match);
+                "/queue/applications", new ApplicationEvent(applicant.getName(), vacancy.getName(), fitRatio)));
     }
 }

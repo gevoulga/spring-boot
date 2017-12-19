@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.voulgarakis.icsc2018.recruitment.controller.MatchController;
 import ch.voulgarakis.icsc2018.recruitment.dao.ApplicantRepository;
+import ch.voulgarakis.icsc2018.recruitment.dao.ApplicationRepository;
 import ch.voulgarakis.icsc2018.recruitment.dao.SkillRepository;
 import ch.voulgarakis.icsc2018.recruitment.dao.VacancyRepository;
 import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
+import ch.voulgarakis.icsc2018.recruitment.model.Application;
 import ch.voulgarakis.icsc2018.recruitment.model.Skill;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
 
 @Transactional
 public class RecruitmentServiceImpl implements RecruitmentService {
@@ -25,6 +26,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     private VacancyRepository vacRepo;
     @Autowired
     private ApplicantRepository appRepo;
+    @Autowired
+    private ApplicationRepository applRepo;
     @Autowired
     private MatchController matchController;
 
@@ -92,6 +95,12 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         for (Vacancy vac : vacRepo.findAll())
             ret += "\n" + String.format("\t%s", vac);
         ret += "\n" + String.format("----------------");
+
+        // Now display the Application repository
+        ret += "\n" + String.format("Application repository contents: %d", applRepo.count());
+        for (Application appl : applRepo.findAll())
+            ret += "\n" + String.format("\t%s", appl);
+        ret += "\n" + String.format("----------------");
         return ret;
     }
 
@@ -99,11 +108,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
      * success = Sum(s(true|false)*wA(0-1)*wV(0-1)) > fitThres
      */
     @Override
-    public ApplicationResult apply(Applicant applicant, Vacancy vacancy) {
-        // Store the fact that the applicant applied for the vacancy (Bi-directional)
-        vacancy.getApplicants().add(applicant);
-        applicant.getVacancies().add(vacancy);
-
+    public double apply(Applicant applicant, Vacancy vacancy) {
         List<String> sV = vacancy.getRequiredSkills().parallelStream().map(s -> s.getName())
                 .collect(Collectors.toList());
         List<Double> wV = vacancy.getRequiredSkillWeights();
@@ -112,18 +117,21 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         List<Double> wA = applicant.getSkillStrength();
 
         // Whether the applicant's got what's needed!
-        boolean match = IntStream.range(0, sV.size())
-                .mapToDouble(i -> sA.contains(sV.get(i)) ? wV.get(i) * wA.get(i) : 0d)
-                .sum() >= vacancy.getFitThreshold();
+        double fitRatio = IntStream.range(0, sV.size())
+                .mapToDouble(i -> sA.contains(sV.get(i)) ? wV.get(i) * wA.get(i) : 0d).average().orElse(0);
+
+        // The application to be persisted
+        Application application = new Application(applicant, vacancy, fitRatio);
+        applRepo.save(application);
 
         // Notify about the application attempt and the result!
-        matchController.notify(applicant, vacancy, match);
+        matchController.notify(applicant, vacancy, fitRatio);
 
-        return new ApplicationResult(applicant.getName(), vacancy.getName(), match);
+        return fitRatio;
     }
 
     @Override
-    public ApplicationResult apply(long applicantId, long vacancyId) {
+    public double apply(long applicantId, long vacancyId) {
         return apply(appRepo.findOne(applicantId), vacRepo.findOne(vacancyId));
     }
 }

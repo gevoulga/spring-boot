@@ -82,7 +82,7 @@ public class TestHATEOAS {
         // The Santa vacancy... We want somebody bearing gifts and can fly!
         ///////////
         ResponseEntity<VacancyResource> postResponse4 = rest.postForEntity(url + "/recruitment-with-hateoas/vacancy",
-                new HttpEntity<>(new Vacancy("Santa", 0.8d, new SkillAndWeight(new Skill("Giftbearer"), 0.9d),
+                new HttpEntity<>(new Vacancy("Santa", new SkillAndWeight(new Skill("Giftbearer"), 0.9d),
                         new SkillAndWeight(new Skill("Aviator"), 0.9d))),
                 VacancyResource.class);
         logger.info("\n\tpostResponse4: {}", postResponse4);
@@ -92,7 +92,7 @@ public class TestHATEOAS {
         // The job of a good guy, is to be a good guy!
         ///////////
         ResponseEntity<VacancyResource> postResponse5 = rest.postForEntity(url + "/recruitment-with-hateoas/vacancy",
-                new HttpEntity<>(new Vacancy("BeAGoodGuy", 0.8d, new SkillAndWeight(new Skill("Good"), 0.9d))),
+                new HttpEntity<>(new Vacancy("BeAGoodGuy", new SkillAndWeight(new Skill("Good"), 0.9d))),
                 VacancyResource.class);
         logger.info("\n\tpostResponse5: {}", postResponse5);
         assertTrue("5th POST should have returned Created", postResponse5.getStatusCode().equals(HttpStatus.CREATED));

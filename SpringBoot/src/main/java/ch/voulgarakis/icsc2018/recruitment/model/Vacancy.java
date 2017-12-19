@@ -8,12 +8,9 @@ import java.util.stream.Stream;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -37,16 +34,8 @@ public class Vacancy {
     @ElementCollection
     private List<Double> requiredSkillWeights; // The importance of each skill for the position
 
-    private double fitThreshold; // The fit threshold above which we consider a match
-
-    @ManyToMany(targetEntity = Applicant.class, fetch = FetchType.EAGER)
-    // @ManyToMany(targetEntity = Applicant.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-    @JoinTable(name = "Join_Vacancy_Applicant",
-            // This Entity id
-            joinColumns = { @JoinColumn(name = "vacancy_id", referencedColumnName = "id") },
-            // The other Entity id
-            inverseJoinColumns = { @JoinColumn(name = "applicant_id", referencedColumnName = "id") })
-    private List<Applicant> applicants = new ArrayList<>(); // The applicants having applied for the vacancy
+    @OneToMany(mappedBy = "vacancy")
+    private List<Application> applications = new ArrayList<>(); // The applications for the vacancy
 
     protected Vacancy() {
         // Empty constructor
@@ -54,14 +43,13 @@ public class Vacancy {
         requiredSkillWeights = new ArrayList<>();
     }
 
-    public Vacancy(String name, double fitThreshold, SkillAndWeight... requiredSkillsAndImportance) {
+    public Vacancy(String name, SkillAndWeight... requiredSkillsAndImportance) {
         super();
         this.name = name;
         this.requiredSkills = new SkillList(
                 Stream.of(requiredSkillsAndImportance).parallel().map(e -> e.getSkill()).collect(Collectors.toList()));
         this.requiredSkillWeights = Stream.of(requiredSkillsAndImportance).parallel().map(e -> e.getWeight())
                 .collect(Collectors.toList());
-        this.fitThreshold = fitThreshold;
     }
 
     public String getName() {
@@ -76,12 +64,8 @@ public class Vacancy {
         return requiredSkillWeights;
     }
 
-    public double getFitThreshold() {
-        return fitThreshold;
-    }
-
-    public List<Applicant> getApplicants() {
-        return applicants;
+    public List<Application> getApplications() {
+        return applications;
     }
 
     @Override

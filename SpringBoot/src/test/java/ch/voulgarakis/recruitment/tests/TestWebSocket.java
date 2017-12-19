@@ -24,7 +24,7 @@ import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
 import ch.voulgarakis.icsc2018.recruitment.model.Skill;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
 import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentService;
-import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationResult;
+import ch.voulgarakis.icsc2018.recruitment.utils.ApplicationEvent;
 import ch.voulgarakis.icsc2018.recruitment.utils.SkillAndWeight;
 import ch.voulgarakis.recruitment.tests.config.TestConfig;
 import io.reactivex.disposables.Disposable;
@@ -37,7 +37,7 @@ public class TestWebSocket {
     Logger logger = LoggerFactory.getLogger(TestWebSocket.class);
 
     @Autowired
-    RecruitmentService rs;
+    private RecruitmentService rs;
 
     @Test
     public void chatWebsocketTest() {
@@ -107,18 +107,18 @@ public class TestWebSocket {
         });
 
         // Subscribe on the match topic and on the private queue
-        wsClient.subscribe("/topic/applications", ApplicationResult.class);
+        wsClient.subscribe("/topic/applications", ApplicationEvent.class);
 
         // Apply for a position....
-        ApplicationResult result = rs.apply(
+        double result = rs.apply(
                 // Applicant
                 new Applicant("Jim Carrey", new SkillAndWeight(new Skill("Omnipotent"), 1d),
                         new SkillAndWeight(new Skill("Omnipresent"), 1d)),
                 // Vacancy
-                new Vacancy("God", 0.8d, new SkillAndWeight(new Skill("Omnipresent"), 0.9d),
+                new Vacancy("God", new SkillAndWeight(new Skill("Omnipresent"), 0.9d),
                         new SkillAndWeight(new Skill("Omnipresent"), 0.9d)));
 
-        assertTrue("Jim Carrey is supposed to become god... At least for a week!", result.isMatch());
+        assertTrue("Jim Carrey is supposed to become god... At least for a week!", result >= 0.9);
 
         // Wait a few seconds until the message exchange has been complete, and we can close the websocket session
         try {

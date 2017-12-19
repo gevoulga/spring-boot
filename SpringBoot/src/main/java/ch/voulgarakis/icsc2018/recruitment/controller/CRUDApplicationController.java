@@ -17,47 +17,48 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
-import ch.voulgarakis.icsc2018.recruitment.dao.ApplicantRepository;
-import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
+import ch.voulgarakis.icsc2018.recruitment.dao.ApplicationRepository;
+import ch.voulgarakis.icsc2018.recruitment.model.Application;
 import ch.voulgarakis.icsc2018.recruitment.utils.OperationNotSupportedException;
 
 @RestController
-@RequestMapping("/applicant")
+@RequestMapping("/application")
 // Note that this annotation should typically be used only on a @Service. But since this is a simple CRUD
 // Controller, we break the convention and place it on a @Controller
 @Transactional
-public class CRUDApplicantController {
+public class CRUDApplicationController {
     @Autowired
-    private ApplicantRepository appRepo;
+    private ApplicationRepository appRepo;
 
-    // -------------------Retrieve All Applicants---------------------------------------------
+    // -------------------Retrieve All Applications---------------------------------------------
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Applicant>> listAllApplicants(HttpServletRequest request) {
-        List<Applicant> applicants = appRepo.findAll();
-        return new ResponseEntity<List<Applicant>>(applicants, HttpStatus.OK);
+    public ResponseEntity<List<Application>> listAllApplications(HttpServletRequest request) {
+        List<Application> applications = appRepo.findAll();
+        return new ResponseEntity<List<Application>>(applications, HttpStatus.OK);
     }
 
-    // -------------------Retrieve Single Applicant------------------------------------------
+    // -------------------Retrieve Single Application------------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Applicant> getApplicant(@PathVariable("id") long id) {
-        Applicant applicant = appRepo.findOne(id);
-        if (applicant != null)
-            return new ResponseEntity<Applicant>(applicant, HttpStatus.FOUND);
+    public ResponseEntity<Application> getApplication(@PathVariable("id") long id) {
+        Application application = appRepo.findOne(id);
+        if (application != null)
+            return new ResponseEntity<Application>(application, HttpStatus.FOUND);
         else
-            return new ResponseEntity<Applicant>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Application>(HttpStatus.NOT_FOUND);
     }
 
-    // -------------------Create Single Applicants---------------------------------------------
+    // -------------------Create Single Applications---------------------------------------------
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<Applicant> createApplicant(HttpServletRequest request, @RequestBody Applicant applicant) {
-        if (applicant != null)
+    public ResponseEntity<Application> createApplication(HttpServletRequest request,
+            @RequestBody Application application) {
+        if (application != null)
             synchronized (appRepo) {
-                if (!appRepo.exists(Example.of(applicant))) {
-                    appRepo.save(applicant);
+                if (!appRepo.exists(Example.of(application))) {
+                    appRepo.save(application);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 } else
                     return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -66,15 +67,15 @@ public class CRUDApplicantController {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
-    // -------------------Update Applicants-------------------------------------------
+    // -------------------Update Applications-------------------------------------------
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public ResponseEntity<Applicant> createApplicants(HttpServletRequest request,
-            @RequestBody List<Applicant> applicants) {
-        // List<HttpStatus> httpStatuses = applicants.stream().map(applicant -> {
-        // if (applicant != null)
-        // if (!rs.existsApplicant(applicant)) {
-        // rs.updateApplicant(applicant);
+    public ResponseEntity<Application> createApplications(HttpServletRequest request,
+            @RequestBody List<Application> applications) {
+        // List<HttpStatus> httpStatuses = applications.stream().map(application -> {
+        // if (application != null)
+        // if (!rs.existsApplication(application)) {
+        // rs.updateApplication(application);
         // return HttpStatus.OK;
         // } else
         // return HttpStatus.NOT_FOUND;
@@ -88,23 +89,24 @@ public class CRUDApplicantController {
         throw new OperationNotSupportedException("I am sorry but bulk updates are not supported yet.");
     }
 
-    // ------------------- Update Single Applicant ------------------------------------------------
+    // ------------------- Update Single Application ------------------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Applicant> updateApplicant(@PathVariable("id") long id, @RequestBody Applicant applicant) {
+    public ResponseEntity<Application> updateApplication(@PathVariable("id") long id,
+            @RequestBody Application application) {
         synchronized (appRepo) {
             if (appRepo.exists(id)) {
-                appRepo.save(applicant);
+                appRepo.save(application);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    // ------------------- Delete Single Applicant-----------------------------------------
+    // ------------------- Delete Single Application-----------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Applicant> deleteApplicant(@PathVariable("id") long id) {
+    public ResponseEntity<Application> deleteApplication(@PathVariable("id") long id) {
         if (appRepo.exists(id)) {
             appRepo.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -112,15 +114,15 @@ public class CRUDApplicantController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // ------------------- Delete All Applicants-----------------------------
+    // ------------------- Delete All Applications-----------------------------
 
     @RequestMapping(value = "", method = RequestMethod.DELETE)
-    public ResponseEntity<Applicant> deleteAllApplicants() {
+    public ResponseEntity<Application> deleteAllApplications() {
         appRepo.deleteAllInBatch();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // ------------------- Delete All Applicants-----------------------------
+    // ------------------- Delete All Applications-----------------------------
     @ExceptionHandler({ OperationNotSupportedException.class })
     protected ResponseEntity<String> handleUnknownException(OperationNotSupportedException ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_IMPLEMENTED);
