@@ -1,20 +1,14 @@
-###
-#The Server setup
-###
-server:
-  port: 8081
-  contextPath: /recruitment-service
-  
+
 ###
 #   Database Settings
 ###
 spring:
   application:
-    name: recruitment-service
+    name: recruitment-microservice
   datasource:
     #url: jdbc:h2:file:~/db/example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER=true;AUTO_SERVER_PORT=9092
     #url: jdbc:h2:file:~/db/example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=true
-    url: jdbc:h2:mem:example-app
+    url: jdbc:h2:mem:recruitment-service
     platform: h2
     username: sa
     password:

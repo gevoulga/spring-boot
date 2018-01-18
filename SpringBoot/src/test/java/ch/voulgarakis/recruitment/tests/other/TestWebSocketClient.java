@@ -1,4 +1,4 @@
-package ch.voulgarakis.icsc2018;
+package ch.voulgarakis.recruitment.tests.other;
 
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;

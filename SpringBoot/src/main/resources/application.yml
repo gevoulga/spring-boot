@@ -3,12 +3,14 @@
 ###
 server:
   port: 8081
-  contextPath: /RecruitmentService
+  contextPath: /recruitment-service
   
 ###
 #   Database Settings
 ###
 spring:
+  application:
+    name: recruitment-service
   datasource:
     #url: jdbc:h2:file:~/db/example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER=true;AUTO_SERVER_PORT=9092
     #url: jdbc:h2:file:~/db/example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=true

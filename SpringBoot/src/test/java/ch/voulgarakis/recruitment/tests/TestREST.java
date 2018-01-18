@@ -36,7 +36,7 @@ import ch.voulgarakis.recruitment.tests.config.TestConfig;
 @Transactional
 public class TestREST {
     Logger logger = LoggerFactory.getLogger(TestREST.class);
-    String url = "http://localhost:8081/RecruitmentService";
+    String url = "http://localhost:8081/recruitment-service";
 
     @Autowired
     private RestTemplate rest;

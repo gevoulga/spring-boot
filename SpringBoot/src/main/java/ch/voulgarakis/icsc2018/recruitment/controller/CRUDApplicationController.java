@@ -8,31 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
+import ch.voulgarakis.icsc2018.recruitment.controller.feign.ApplicationFeign;
 import ch.voulgarakis.icsc2018.recruitment.dao.ApplicationRepository;
 import ch.voulgarakis.icsc2018.recruitment.model.Application;
 import ch.voulgarakis.icsc2018.recruitment.utils.OperationNotSupportedException;
 
-@RestController
-@RequestMapping("/application")
-// Note that this annotation should typically be used only on a @Service. But since this is a simple CRUD
-// Controller, we break the convention and place it on a @Controller
-@Transactional
-public class CRUDApplicationController {
+public class CRUDApplicationController implements ApplicationFeign {
     @Autowired
     private ApplicationRepository appRepo;
 
     // -------------------Retrieve All Applications---------------------------------------------
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @Override
     public ResponseEntity<List<Application>> listAllApplications(HttpServletRequest request) {
         List<Application> applications = appRepo.findAll();
         return new ResponseEntity<List<Application>>(applications, HttpStatus.OK);
@@ -40,8 +32,8 @@ public class CRUDApplicationController {
 
     // -------------------Retrieve Single Application------------------------------------------
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Application> getApplication(@PathVariable("id") long id) {
+    @Override
+    public ResponseEntity<Application> getApplication(long id) {
         Application application = appRepo.findOne(id);
         if (application != null)
             return new ResponseEntity<Application>(application, HttpStatus.FOUND);
@@ -51,8 +43,7 @@ public class CRUDApplicationController {
 
     // -------------------Create Single Applications---------------------------------------------
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    @Transactional
+    @Override
     public ResponseEntity<Application> createApplication(HttpServletRequest request,
             @RequestBody Application application) {
         if (application != null)
@@ -69,10 +60,11 @@ public class CRUDApplicationController {
 
     // -------------------Update Applications-------------------------------------------
 
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @Override
     public ResponseEntity<Application> createApplications(HttpServletRequest request,
             @RequestBody List<Application> applications) {
-        // List<HttpStatus> httpStatuses = applications.stream().map(application -> {
+        // List<HttpStatus> httpStatuses = applications.stream().map(application
+        // -> {
         // if (application != null)
         // if (!rs.existsApplication(application)) {
         // rs.updateApplication(application);
@@ -83,15 +75,17 @@ public class CRUDApplicationController {
         // return HttpStatus.OK;
         // }).collect(Collectors.toList());
         //
-        // return httpStatuses.stream().noneMatch(httpStatus -> httpStatus.equals(HttpStatus.NOT_FOUND))
-        // ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.PARTIAL_CONTENT);
+        // return httpStatuses.stream().noneMatch(httpStatus ->
+        // httpStatus.equals(HttpStatus.NOT_FOUND))
+        // ? new ResponseEntity<>(HttpStatus.OK) : new
+        // ResponseEntity<>(HttpStatus.PARTIAL_CONTENT);
 
         throw new OperationNotSupportedException("I am sorry but bulk updates are not supported yet.");
     }
 
     // ------------------- Update Single Application ------------------------------------------------
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @Override
     public ResponseEntity<Application> updateApplication(@PathVariable("id") long id,
             @RequestBody Application application) {
         synchronized (appRepo) {
@@ -105,7 +99,7 @@ public class CRUDApplicationController {
 
     // ------------------- Delete Single Application-----------------------------------------
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @Override
     public ResponseEntity<Application> deleteApplication(@PathVariable("id") long id) {
         if (appRepo.exists(id)) {
             appRepo.delete(id);
@@ -116,7 +110,7 @@ public class CRUDApplicationController {
 
     // ------------------- Delete All Applications-----------------------------
 
-    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    @Override
     public ResponseEntity<Application> deleteAllApplications() {
         appRepo.deleteAllInBatch();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

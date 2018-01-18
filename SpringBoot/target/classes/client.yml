@@ -1,0 +1,33 @@
+# Spring Properties
+spring:
+  application:
+     name: service-server
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: cs-ccr-ln4:8958/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+  hystrix: # To disable Hystrix in Feign
+    enabled: false
+    
+# To set thread isolation to SEMAPHORE
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE

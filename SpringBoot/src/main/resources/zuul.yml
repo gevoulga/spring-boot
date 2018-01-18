@@ -1,0 +1,12 @@
+server:
+  port: ${PORT:8765}
+ 
+zuul:
+  prefix: /api
+  routes:
+    account:
+      path: /skill/**
+      serviceId: skill-service
+    customer:
+      path: /customer/**
+      serviceId: customer-service

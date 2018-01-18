@@ -1,0 +1,25 @@
+###
+# Discovery Server Access
+###
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:${EUREKA_PORT:8761}/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    preferIpAddress: true
+    
+    
+ribbon:
+  eureka:
+    enabled: true
+
+# HTTP Server
+server:
+  port: ${PORT:8766}   # HTTP (Tomcat) port
+  contextPath: /recruitment-service

@@ -53,7 +53,7 @@ public class TestWebSocket {
         IntStream.range(0, n).parallel().forEach((i) -> {
 
             // Create the websocket session connection
-            WebsocketClient wsClient = WebsocketClient.create("ws://localhost:8081/RecruitmentService/recruitment");
+            WebsocketClient wsClient = WebsocketClient.create("ws://localhost:8081/recruitment-service/recruitment");
 
             // The rx stream
             Disposable subscription = wsClient.rxStream()
