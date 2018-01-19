@@ -122,7 +122,12 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
         // The application to be persisted
         Application application = new Application(applicant, vacancy, fitRatio);
+        applicant.getApplications().add(application);
+        vacancy.getApplications().add(application);
+
         applRepo.save(application);
+        appRepo.save(applicant);
+        vacRepo.save(vacancy);
 
         // Notify about the application if a good fit -> CrossCuttingConcern?
         // if (fitRatio > 0.75)

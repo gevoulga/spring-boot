@@ -1,6 +1,7 @@
 package ch.voulgarakis.icsc2018.recruitment.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -8,7 +9,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ch.voulgarakis.icsc2018.recruitment.service.EntityListener;
+
 @Entity
+@EntityListeners(EntityListener.class)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 public class Skill {
     @Id

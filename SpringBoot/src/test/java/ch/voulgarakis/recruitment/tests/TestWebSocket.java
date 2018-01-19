@@ -8,8 +8,10 @@ import java.util.stream.IntStream;
 
 import javax.transaction.Transactional;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ import ch.voulgarakis.recruitment.tests.config.TestConfig;
 import io.reactivex.disposables.Disposable;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @ContextConfiguration(classes = TestConfig.class) // Setup test with TestConfig
 @Transactional
@@ -99,7 +102,7 @@ public class TestWebSocket {
     @Test
     public void matchWebsocketTest() {
         // Create the websocket session connection
-        WebsocketClient wsClient = WebsocketClient.create("ws://localhost:8081/RecruitmentService/recruitment");
+        WebsocketClient wsClient = WebsocketClient.create("ws://localhost:8081/recruitment-service/recruitment");
 
         // The rx stream
         Disposable subscription = wsClient.rxStream().subscribe(m -> {

@@ -6,8 +6,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
+import ch.voulgarakis.icsc2018.recruitment.model.Application;
 import ch.voulgarakis.icsc2018.recruitment.model.Skill;
 import ch.voulgarakis.icsc2018.recruitment.model.Vacancy;
 import ch.voulgarakis.icsc2018.recruitment.utils.SkillAndWeight;
 import ch.voulgarakis.recruitment.tests.config.TestConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @ContextConfiguration(classes = TestConfig.class) // Setup test with TestConfig
 @ActiveProfiles("rest")
@@ -217,13 +221,13 @@ public class TestREST {
 
     }
 
-    @Test
+    // @Test
     public void test4Cleanup() {
-
         ///////////
         // Send a 1st DELETE
         ///////////
-        ResponseEntity<Skill> deleteResponse1 = rest.exchange(url + "/skill", HttpMethod.DELETE, null, Skill.class);
+        ResponseEntity<Application> deleteResponse1 = rest.exchange(url + "/application", HttpMethod.DELETE, null,
+                Application.class);
         logger.info("\n\tdeleteResponse1: {}", deleteResponse1);
         assertTrue("1st DELETE should have returned NoContent",
                 deleteResponse1.getStatusCode().equals(HttpStatus.NO_CONTENT));
@@ -246,13 +250,23 @@ public class TestREST {
         assertTrue("1st DELETE should have returned NoContent",
                 deleteResponse3.getStatusCode().equals(HttpStatus.NO_CONTENT));
 
+        ///////////
+        // Send a 4th DELETE
+        ///////////
+        ResponseEntity<Skill> deleteResponse4 = rest.exchange(url + "/skill", HttpMethod.DELETE, null, Skill.class);
+        logger.info("\n\tdeleteResponse1: {}", deleteResponse4);
+        assertTrue("1st DELETE should have returned NoContent",
+                deleteResponse4.getStatusCode().equals(HttpStatus.NO_CONTENT));
+
         // Check the test
-        assertTrue("Skill Repository ended up with more entries... Check for duplicates...",
-                rest.getForEntity(url + "/skill", List.class).getBody().size() == 0);
+        assertTrue("Application Repository ended up with more entries... Check for duplicates...",
+                rest.getForEntity(url + "/application", List.class).getBody().size() == 0);
         assertTrue("Applicant Repository ended up with more entries... Check for duplicates...",
                 rest.getForEntity(url + "/applicant", List.class).getBody().size() == 0);
         assertTrue("Vacancy Repository ended up with more entries... Check for duplicates...",
                 rest.getForEntity(url + "/vacancy", List.class).getBody().size() == 0);
+        assertTrue("Skill Repository ended up with more entries... Check for duplicates...",
+                rest.getForEntity(url + "/skill", List.class).getBody().size() == 0);
 
     }
 }

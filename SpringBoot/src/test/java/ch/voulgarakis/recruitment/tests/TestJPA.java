@@ -3,8 +3,10 @@ package ch.voulgarakis.recruitment.tests;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ch.voulgarakis.icsc2018.recruitment.dao.ApplicantRepository;
+import ch.voulgarakis.icsc2018.recruitment.dao.ApplicationRepository;
 import ch.voulgarakis.icsc2018.recruitment.dao.SkillRepository;
 import ch.voulgarakis.icsc2018.recruitment.dao.VacancyRepository;
 import ch.voulgarakis.icsc2018.recruitment.model.Applicant;
@@ -24,6 +27,7 @@ import ch.voulgarakis.icsc2018.recruitment.utils.SkillAndWeight;
 import ch.voulgarakis.recruitment.tests.config.TestConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @DataJpaTest
 @ContextConfiguration(classes = TestConfig.class) // Setup test with TestConfig
 @ActiveProfiles("jpa")
@@ -39,8 +43,10 @@ public class TestJPA {
     ApplicantRepository appRepo;
     @Autowired
     VacancyRepository vacRepo;
+    @Autowired
+    ApplicationRepository applRepo;
 
-    @Test
+    // @Test
     public void crudPopulateDB() {
         ///////////
         // Multiple entries of the same skill
@@ -80,7 +86,7 @@ public class TestJPA {
         assertTrue("Applicant Repository ended up with more entries... Check for duplicates...", appRepo.count() == 2);
     }
 
-    @Test
+    // @Test
     public void servicePopulateDB() {
         ///////////
         // Write a few Applicants!
@@ -137,5 +143,7 @@ public class TestJPA {
         logger.info("Applied Claus for Santa...");
         logger.info(rs.info());
         assertTrue("Claus should have gotten the job of Santa.", fit >= 0.9);
+        assertTrue("Application Repository ended up with more entries... Check for duplicates...",
+                applRepo.count() == 1);
     }
 }

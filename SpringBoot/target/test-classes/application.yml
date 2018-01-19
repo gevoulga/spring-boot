@@ -3,7 +3,7 @@
 ###
 server:
   port: 8081
-  contextPath: /RecruitmentService
+  contextPath: /recruitment-service
   
 ###
 #   Database Settings
