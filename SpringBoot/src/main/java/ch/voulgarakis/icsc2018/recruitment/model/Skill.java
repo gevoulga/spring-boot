@@ -9,10 +9,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ch.voulgarakis.icsc2018.recruitment.service.EntityListener;
+import ch.voulgarakis.icsc2018.recruitment.events.SkillEntityListener;
 
 @Entity
-@EntityListeners(EntityListener.class)
+@EntityListeners(SkillEntityListener.class)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 public class Skill {
     @Id

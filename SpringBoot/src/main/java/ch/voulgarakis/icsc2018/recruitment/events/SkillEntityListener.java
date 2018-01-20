@@ -1,4 +1,4 @@
-package ch.voulgarakis.icsc2018.recruitment.service;
+package ch.voulgarakis.icsc2018.recruitment.events;
 
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
@@ -8,11 +8,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 
-import ch.voulgarakis.icsc2018.recruitment.model.Skill;
-
-public class EntityListener {
+public class SkillEntityListener {
     @PrePersist
-    void onPrePersist(Skill entity) {
+    void onPrePersist(Object entity) {
     }
 
     @PostPersist
