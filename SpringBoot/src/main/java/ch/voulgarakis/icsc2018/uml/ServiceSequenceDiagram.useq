@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.2.2" icons="true" automaticImage="PNG" generate-combined-fragments="true">  
+  <object id="1" language="java" name="ch.voulgarakis.icsc2018.recruitment.service.RecruitmentServiceImpl" 
+    project="SpringBoot" 
+    file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/service/RecruitmentServiceImpl.java" 
+    binary="false" label="recruitmentServiceImpl" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="2">      
+      <position height="600" width="0" x="0" y="91"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="537" width="0" x="0" y="133"/>    
+    </execution>  
+  </object>  
+  <object id="27" language="java" name="ch.voulgarakis.icsc2018.recruitment.model.Vacancy" project="SpringBoot" 
+    file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/model/Vacancy.java" binary="false" 
+    label="vacancy" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="6">      
+      <position height="21" width="0" x="0" y="164"/>    
+    </execution>    
+    <execution id="8">      
+      <position height="21" width="0" x="0" y="205"/>    
+    </execution>    
+    <execution id="18">      
+      <position height="21" width="0" x="0" y="425"/>    
+    </execution>  
+  </object>  
+  <object id="28" language="java" name="ch.voulgarakis.icsc2018.recruitment.model.Applicant" project="SpringBoot" 
+    file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/model/Applicant.java" binary="false" 
+    label="applicant" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="10">      
+      <position height="21" width="0" x="0" y="267"/>    
+    </execution>    
+    <execution id="12">      
+      <position height="21" width="0" x="0" y="296"/>    
+    </execution>    
+    <execution id="16">      
+      <position height="21" width="0" x="0" y="394"/>    
+    </execution>  
+  </object>  
+  <object id="29" language="java" name="ch.voulgarakis.icsc2018.recruitment.model.Application" project="SpringBoot" 
+    file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/model/Application.java" binary="false" 
+    label="application" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="14">      
+      <position height="21" width="0" x="0" y="363"/>    
+    </execution>  
+  </object>  
+  <object id="30" language="java" name="org.springframework.data.repository.CrudRepository" project="SpringBoot" 
+    file="J:/m2/repository/org/springframework/data/spring-data-commons/1.13.7.RELEASE/spring-data-commons-1.13.7.RELEASE.jar" 
+    binary="true" label="applRepo" type="interface" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="20">      
+      <position height="21" width="0" x="0" y="486"/>    
+    </execution>  
+  </object>  
+  <object id="31" language="java" name="org.springframework.data.repository.CrudRepository" project="SpringBoot" 
+    file="J:/m2/repository/org/springframework/data/spring-data-commons/1.13.7.RELEASE/spring-data-commons-1.13.7.RELEASE.jar" 
+    binary="true" label="appRepo" type="interface" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="22">      
+      <position height="21" width="0" x="0" y="509"/>    
+    </execution>  
+  </object>  
+  <object id="32" language="java" name="org.springframework.data.repository.CrudRepository" project="SpringBoot" 
+    file="J:/m2/repository/org/springframework/data/spring-data-commons/1.13.7.RELEASE/spring-data-commons-1.13.7.RELEASE.jar" 
+    binary="true" label="vacRepo" type="interface" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="24">      
+      <position height="21" width="0" x="0" y="534"/>    
+    </execution>  
+  </object>  
+  <object id="33" language="java" name="ch.voulgarakis.icsc2018.recruitment.controller.MatchController" 
+    project="SpringBoot" 
+    file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/controller/MatchController.java" binary="false" 
+    label="matchController" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="365" y="0"/>    
+    <execution id="26">      
+      <position height="21" width="0" x="0" y="628"/>    
+    </execution>  
+  </object>  
+  <combined-fragment id="34" interaction-operator="OPT">    
+    <interaction-operand id="35" constraint="fitRatio &gt; 0.75">      
+      <fragment refId="25"/>    
+    </interaction-operand>  
+  </combined-fragment>  
+  <message id="3" 
+    operation="apply(ch.voulgarakis.icsc2018.recruitment.model.Applicant,ch.voulgarakis.icsc2018.recruitment.model.Vacancy):double" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" operation="getRequiredSkills():java.util.List&lt;Skill&gt;" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="7" operation="getRequiredSkillWeights():java.util.List&lt;Double&gt;" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="9" operation="getSkillSet():java.util.List&lt;Skill&gt;" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="10"/>  
+  </message>  
+  <message id="11" operation="getSkillStrength():java.util.List&lt;Double&gt;" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="13" 
+    operation="Application(ch.voulgarakis.icsc2018.recruitment.model.Applicant,ch.voulgarakis.icsc2018.recruitment.model.Vacancy,double)" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="14"/>  
+  </message>  
+  <message id="15" operation="getApplications():java.util.List&lt;Application&gt;" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>  
+  <message id="17" operation="getApplications():java.util.List&lt;Application&gt;" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="18"/>  
+  </message>  
+  <message id="19" operation="save(S):S" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="20"/>  
+  </message>  
+  <message id="21" operation="save(S):S" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="23" operation="save(S):S" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="24"/>  
+  </message>  
+  <message id="25" 
+    operation="notify(ch.voulgarakis.icsc2018.recruitment.model.Applicant,ch.voulgarakis.icsc2018.recruitment.model.Vacancy,double):void" 
+    asynchronous="false" x="107" y="609">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="26"/>  
+  </message>
+</sequence-diagram>

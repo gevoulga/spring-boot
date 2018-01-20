@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ch.voulgarakis.icsc2018.recruitment.controller.MatchController;
 import ch.voulgarakis.icsc2018.recruitment.dao.ApplicantRepository;
 import ch.voulgarakis.icsc2018.recruitment.dao.ApplicationRepository;
 import ch.voulgarakis.icsc2018.recruitment.dao.SkillRepository;
@@ -28,8 +27,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     private ApplicantRepository appRepo;
     @Autowired
     private ApplicationRepository applRepo;
-    @Autowired
-    private MatchController matchController;
+    // @Autowired
+    // private MatchController matchController;
 
     @Override
     public Applicant saveApplicant(Applicant applicant) {

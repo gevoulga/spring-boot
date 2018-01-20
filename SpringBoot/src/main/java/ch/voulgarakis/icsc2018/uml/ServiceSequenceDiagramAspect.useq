@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.2.2" icons="true" automaticImage="PNG" generate-combined-fragments="true">  
+  <object id="1" language="java" name="ch.voulgarakis.icsc2018.recruitment.service.RecruitmentServiceImpl" 
+    project="SpringBoot" 
+    file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/service/RecruitmentServiceImpl.java" 
+    binary="false" label="recruitmentServiceImpl" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="2">      
+      <position height="84" width="0" x="0" y="91"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="21" width="0" x="0" y="133"/>    
+    </execution>    
+    <execution id="5">      
+      <position height="63" width="192" x="5" y="193"/>    
+    </execution>  
+  </object>  
+  <object id="8" language="java" name="ch.voulgarakis.icsc2018.recruitment.service.MatchAspect" project="SpringBoot" 
+    file="/SpringBoot/src/main/java/ch/voulgarakis/icsc2018/recruitment/service/MatchAspect.java" binary="false" 
+    label="matchAspect" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="478" y="0"/>    
+    <execution id="7">      
+      <position height="21" width="192" x="404" y="214"/>    
+    </execution>  
+  </object>  
+  <message id="3" 
+    operation="apply(ch.voulgarakis.icsc2018.recruitment.model.Applicant,ch.voulgarakis.icsc2018.recruitment.model.Vacancy):double" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="6" asynchronous="false">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="7"/>  
+  </message>
+</sequence-diagram>
