@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.voulgarakis.icsc2018.recruitment.dao.ApplicantRepository;
 import ch.voulgarakis.icsc2018.recruitment.dao.ApplicationRepository;

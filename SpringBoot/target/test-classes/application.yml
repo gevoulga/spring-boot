@@ -44,9 +44,12 @@ spring:
 
 spring:
   profiles: jpa
-spring.jpa.properties.hibernate:
+  jpa.properties.hibernate:
       type: trace
       show_sql: true
+#logging:
+#  level:
+#    org.springframework.transaction: TRACE
       
 
 ---

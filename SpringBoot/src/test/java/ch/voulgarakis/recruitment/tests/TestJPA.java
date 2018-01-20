@@ -46,7 +46,7 @@ public class TestJPA {
     @Autowired
     ApplicationRepository applRepo;
 
-    // @Test
+    @Test
     public void crudPopulateDB() {
         ///////////
         // Multiple entries of the same skill

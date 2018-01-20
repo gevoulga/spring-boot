@@ -10,14 +10,14 @@ import org.springframework.web.client.RestTemplate;
 
 import ch.voulgarakis.icsc2018.ApplicationConfig;
 import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentService;
-import ch.voulgarakis.icsc2018.recruitment.service.RecruitmentServiceImpl;
+import ch.voulgarakis.icsc2018.recruitment.service.TransactionFailRecruitmentServiceImpl;
 
 @ComponentScan(basePackageClasses = ApplicationConfig.class)
 // @Profile("rest")
-public class TestConfig {
+public class TransactionTestConfig {
     @Bean
     public RecruitmentService recruitmentService() {
-        return new RecruitmentServiceImpl();
+        return new TransactionFailRecruitmentServiceImpl();
     }
 
     @Bean
