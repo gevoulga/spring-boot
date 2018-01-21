@@ -17,4 +17,13 @@ public interface SkillRepository extends JpaRepository<Skill, String> {
     // custom query example and return a stream
     // @Query("select c from Skills c where c.name like 'skillNameBeginning%'")
     // Stream<Skill> skillsBeginningWith(@Param("skillNameBeginning") String skillNameBeginning);
+
+    // @Query("SELECT CASE WHEN COUNT(fsb) > 0 THEN true ELSE false END FROM FacadeSettingBackup fsb WHERE fsb.dsi =
+    // ?#{[0]}")
+    // public boolean existsByDsi(String dsi);
+    //
+    // @Query("SELECT CASE WHEN COUNT(fsb) > 0 THEN true ELSE false END FROM FacadeSettingBackup fsb WHERE fsb.device =
+    // ?#{[0]} AND fsb.property = ?#{[1]} AND fsb.field = ?#{[2]}")
+    // public boolean existsByDeviceAndPropertyAndField(String device, String property, String field);
+
 }
