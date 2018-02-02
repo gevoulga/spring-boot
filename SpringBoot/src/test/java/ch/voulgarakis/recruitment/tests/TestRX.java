@@ -89,6 +89,7 @@ public class TestRX {
 				.subscribeOn(Schedulers.newThread())
 
 				// Take the 10 first emissions
+				.take(10)
 
 				// Do NOT let this run forever...!
 				.takeUntil(Flowable.interval(20, TimeUnit.SECONDS))
@@ -115,11 +116,13 @@ public class TestRX {
 				.subscribeOn(Schedulers.newThread())
 				
 				// Take the last 500 entries
+				.takeLast(500)
 				
 				// convert to skill
+				.map(w->new Skill(w))
 				
 				// bunch together every 50 words
-				
+				.buffer(50)
 				
 				// Every 5 seconds, we send a bunch of 50 words (from previous step)
 				.zipWith(Flowable.interval(5, TimeUnit.SECONDS), (w, t) -> w)
@@ -127,7 +130,7 @@ public class TestRX {
 				// Subscribe to start the procedure (sets observation thread the main)
 				.blockingSubscribe(skillList -> {
 					// Store to the DB
-					
+					skillRepo.save(skillList);
 				});
 
 		logger.info("SkillRepo: " + skillRepo.count());
