@@ -11,7 +11,7 @@
 		<dependency>
 			<groupId>io.reactivex.rxjava2</groupId>
 			<artifactId>rxjava</artifactId>
-			<version>RELEASE</version>
+			<version>2.1.8</version>
 		</dependency>
 		
 		<!-- Setup Spring Boot -->
@@ -25,25 +25,25 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>RELEASE</version>
+			<version>1.5.9.RELEASE</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<version>RELEASE</version>
+			<version>1.5.9.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<version>RELEASE</version>
+			<version>1.5.9.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
-			<version>RELEASE</version>
+			<version>1.5.9.RELEASE</version>
 		</dependency>
 
 <!-- 		<dependency> -->
@@ -61,7 +61,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>RELEASE</version>
+			<version>1.4.196</version>
 		</dependency>
 
 <!-- 		<dependency> -->
@@ -79,7 +79,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-hateoas</artifactId>
-			<version>RELEASE</version>
+			<version>1.5.9.RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>
